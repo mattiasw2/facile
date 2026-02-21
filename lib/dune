@@ -1,0 +1,4 @@
+(library
+ (public_name facile)
+ (name facile)
+ (ocamlopt_flags (-unsafe -noassert -inline 10)))

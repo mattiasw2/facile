@@ -144,7 +144,7 @@ let monome z x y =
 		Fcl_stak.set zero_removed true;
 		Fd.refine x (Fcl_domain.remove 0 (Attr.dom xa));
 		Fd.refine y (Fcl_domain.remove 0 (Attr.dom ya));
-	        (* x et y peuvent etre instanciées *)
+	        (* x et y peuvent etre instanciï¿½es *)
 		loop () end
 	      else begin
 		let bounds = compute_bounds () in
@@ -175,7 +175,7 @@ let min_max_abs_for_abs x =
   | Unk xa ->
       let a = Attr.min xa and b = Attr.max xa in
       if a >= 0 then (a, b) else if b <= 0 then (-b, -a) else
-      (* x à cheval sur 0 *)
+      (* x ï¿½ cheval sur 0 *)
       let domx = Attr.dom xa in
       let a' = Fcl_domain.greatest_leq domx 0
       and b' = Fcl_domain.smallest_geq domx 0 in
@@ -274,7 +274,7 @@ let min_max_of_div_for_div a b z =
 let min_max_of_remainder x y =
   let r_abs_max =
     let min_y, max_y = Fd.min_max y in
-    max (Pervasives.abs min_y) (Pervasives.abs max_y) - 1 in
+    max (Stdlib.abs min_y) (Stdlib.abs max_y) - 1 in
   if Fd.min x >= 0 then (0, r_abs_max)
   else if Fd.max x <= 0 then ((0 - r_abs_max), 0)
   else ((0 - r_abs_max), r_abs_max)
@@ -365,9 +365,9 @@ let min_max_of_div_for_mod a b c d =
   if c <= 0 && d >= 0 then
     (min_int, max_int)
   else (* x/y positive ou negative *)
-    if sign a * sign b < 0 then (* xz à cheval sur 0 *)
+    if sign a * sign b < 0 then (* xz ï¿½ cheval sur 0 *)
       if c > 0 then (a /+ c, b /- c) else (b /+ d, a /- d)
-    (* ni xz ni x/y à cheval sur 0 *)
+    (* ni xz ni x/y ï¿½ cheval sur 0 *)
     else if a >= 0 then (* xz positive *)
       if c > 0 then (a /+ d, b /- c) else (b /+ d, a /- c) (* x/y positive ou negative *)
     else (* xz negative *)

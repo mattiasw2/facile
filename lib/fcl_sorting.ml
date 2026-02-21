@@ -93,9 +93,9 @@ let new_sort a p d =
     let infI = Array.make n (-1) and supI = Array.make n (-1) in
 
     (* Calcul de s sans tri: On remarque que
-        1) e, e' et b' sont déjà triés
-        2) c est la version triée de b' par la permutation pi' o pi_1
-        c) il n'est pas nécessaire de merger c et e' mais seulement de
+        1) e, e' et b' sont dï¿½jï¿½ triï¿½s
+        2) c est la version triï¿½e de b' par la permutation pi' o pi_1
+        c) il n'est pas nï¿½cessaire de merger c et e' mais seulement de
            les parcourir en // *)
     (* l: index in e'
        k: index in c
@@ -152,7 +152,7 @@ let new_sort a p d =
     and s' (i,j) = infI'.(i) <= j && j <= supI'.(i) in
 
     
-(*** (* graphmin sets, version avec arbre binaire à la heap *)
+(*** (* graphmin sets, version avec arbre binaire ï¿½ la heap *)
     let graphmin inf sup =
       let t = Array.make (2*n-1) (-1) in
       let left k = 2*k+1 and right k = 2*k + 2 in
@@ -306,8 +306,8 @@ let new_sort a p d =
 
 open Fcl_arith
 
-(* unification de deux variables du tableau et du tableau trié quand la
-   permutation se précise *)
+(* unification de deux variables du tableau et du tableau triï¿½ quand la
+   permutation se prï¿½cise *)
 let new_perm p a d =
   let delay x =
     Array.iteri (fun i p_i -> delay [Fd.on_subst] p_i ~waking_id:i x) p
@@ -355,7 +355,7 @@ let sortp a =
   else
     let inf, sup =
       Array.fold_left
-      	(fun (inf, sup) x -> Pervasives.min (Fd.min x) inf, Pervasives.max (Fd.max x) sup) (max_int, min_int) a in
+      	(fun (inf, sup) x -> Stdlib.min (Fd.min x) inf, Stdlib.max (Fd.max x) sup) (max_int, min_int) a in
     let d = Fd.array n inf sup
     and p = Fd.array n 0 (n - 1) in
     Fcl_cstr.post (cstr a ~p:(Some p) d);
@@ -368,7 +368,7 @@ let sort a =
   else
     let inf, sup =
       Array.fold_left
-      	(fun (inf, sup) x -> Pervasives.min (Fd.min x) inf, Pervasives.max (Fd.max x) sup) (max_int, min_int) a in
+      	(fun (inf, sup) x -> Stdlib.min (Fd.min x) inf, Stdlib.max (Fd.max x) sup) (max_int, min_int) a in
     let d = Fd.array n inf sup in
     Fcl_cstr.post (cstr a d);
     d;;

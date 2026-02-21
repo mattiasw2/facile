@@ -50,7 +50,7 @@ let create ?(name = "anonymous") ?(nb_wakings = 1) ?fprint ?(priority = normal) 
   and nb_solved = Fcl_stak.ref 0 in
   let update i =
     if update i then
-      if Pervasives.not solved.(i) then begin
+      if Stdlib.not solved.(i) then begin
        	Fcl_stak.set nb_solved (Fcl_stak.get nb_solved + 1);
        	array_set_true solved i
       end in
@@ -231,7 +231,7 @@ let post c =
   already_in_wake := current_status;
   wake_all ()
 
-  (* post pour les démons *)
+  (* post pour les dï¿½mons *)
 let init c =
   c.init ();
   c.delay c;;
@@ -257,7 +257,7 @@ let id c = c.id
 let name c = c.name
 let priority c = c.priority
 
-(* Un objet avec des contraintes qui lui sont attachées *)
+(* Un objet avec des contraintes qui lui sont attachï¿½es *)
 type event = (t * int) list Fcl_stak.ref
 let new_event () = Fcl_stak.ref []
 let schedule (event : event) = List.iter schedule_one_cstr (Fcl_stak.get event)

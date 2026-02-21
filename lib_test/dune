@@ -1,0 +1,8 @@
+(executable
+ (name queens)
+ (libraries facile))
+
+(rule
+ (alias runtest)
+ (deps queens.exe)
+ (action (run %{deps} 8)))
