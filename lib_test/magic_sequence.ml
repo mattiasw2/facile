@@ -26,13 +26,22 @@ let magic n =
   let goal = Goals.Array.forall ~select:min_size Goals.indomain x in
 
   if Goals.solve goal then begin
+    let vals = Array.map Fd.int_value x in
     Printf.printf "Magic sequence (N=%d): " n;
     Array.iteri (fun i v ->
       if i > 0 then Printf.printf ", ";
-      Printf.printf "%d" (Fd.int_value v)) x;
-    Printf.printf "\n"
-  end else
-    Printf.printf "No magic sequence of size %d\n" n
+      Printf.printf "%d" v) vals;
+    Printf.printf "\n";
+    (* Verify: value i appears exactly vals[i] times *)
+    for i = 0 to n - 1 do
+      let count = Array.fold_left (fun acc v -> if v = i then acc + 1 else acc) 0 vals in
+      assert (count = vals.(i)
+              || (Printf.eprintf "FAILED: %d appears %d times, expected %d\n" i count vals.(i); false))
+    done;
+    Printf.printf "Magic sequence: PASSED\n"
+  end else begin
+    Printf.printf "No magic sequence of size %d\n" n; exit 1
+  end
 
 let () =
   let n =

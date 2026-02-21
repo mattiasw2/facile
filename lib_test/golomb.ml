@@ -41,14 +41,39 @@ let golomb n =
 
   (* Minimize the last tick (ruler length) *)
   let bt = ref 0 in
+  let best_ticks = ref [||] in
   ignore
     (Goals.solve ~control:(fun b -> bt := b)
        (Goals.minimize goal ticks.(n - 1)
           (fun _cost ->
+            best_ticks := Array.map Fd.int_value ticks;
             Printf.printf "  Found: ";
-            Array.iter (fun t -> Printf.printf "%d " (Fd.int_value t)) ticks;
+            Array.iter (fun t -> Printf.printf "%d " t) !best_ticks;
             Printf.printf "(length %d)\n" (Fd.int_value ticks.(n - 1)))));
-  Printf.printf "Golomb ruler with %d marks, %d backtracks\n" n !bt
+  Printf.printf "Golomb ruler with %d marks, %d backtracks\n" n !bt;
+  (* Verify *)
+  let t = !best_ticks in
+  assert (Array.length t = n);
+  assert (t.(0) = 0);
+  (* Verify marks are strictly increasing *)
+  for i = 0 to n - 2 do assert (t.(i) < t.(i + 1)) done;
+  (* Verify all pairwise distances are distinct *)
+  let all_dists = ref [] in
+  for i = 0 to n - 1 do
+    for j = i + 1 to n - 1 do
+      let d = t.(j) - t.(i) in
+      assert (not (List.mem d !all_dists)
+              || (Printf.eprintf "FAILED: duplicate distance %d\n" d; false));
+      all_dists := d :: !all_dists
+    done
+  done;
+  (* Known optimal lengths for small Golomb rulers *)
+  let known_optimal = [| 0; 0; 1; 3; 6; 11; 17; 25; 34; 44; 55 |] in
+  if n < Array.length known_optimal then begin
+    assert (t.(n - 1) = known_optimal.(n)
+            || (Printf.eprintf "FAILED: length %d, expected %d\n" t.(n-1) known_optimal.(n); false));
+  end;
+  Printf.printf "Golomb ruler: PASSED\n"
 
 let () =
   let n =

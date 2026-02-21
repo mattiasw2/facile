@@ -56,9 +56,19 @@ let queens n =
   let bt = ref 0 in
   if Goals.solve ~control:(fun b -> bt := b) (labeling queens) then begin
     Printf.printf "%d backtracks\n" !bt;
-    print queens
-  end else
-    prerr_endline "No solution"
+    print queens;
+    (* Verify: no two queens attack each other *)
+    let cols = Array.map Fd.int_value queens in
+    for i = 0 to n - 1 do
+      for j = i + 1 to n - 1 do
+        assert (cols.(i) <> cols.(j));
+        assert (abs (cols.(i) - cols.(j)) <> j - i)
+      done
+    done;
+    Printf.printf "Queens: PASSED\n"
+  end else begin
+    prerr_endline "No solution"; exit 1
+  end
 
 let _ =
   if Array.length Sys.argv <> 2

@@ -59,14 +59,41 @@ let () =
   let bt = ref 0 in
   if Goals.solve ~control:(fun b -> bt := b) goal then begin
     Printf.printf "Sudoku solved (%d backtracks):\n" !bt;
+    let sol = Array.init 9 (fun i ->
+      Array.init 9 (fun j -> Fd.int_value grid.(i).(j))) in
     for i = 0 to 8 do
       if i > 0 && i mod 3 = 0 then
         Printf.printf "------+-------+------\n";
       for j = 0 to 8 do
         if j > 0 && j mod 3 = 0 then Printf.printf "| ";
-        Printf.printf "%d " (Fd.int_value grid.(i).(j))
+        Printf.printf "%d " sol.(i).(j)
       done;
       Printf.printf "\n"
-    done
-  end else
-    prerr_endline "No solution"
+    done;
+    (* Verify: each row, column, box contains 1..9 *)
+    let check_group name vals =
+      let sorted = Array.copy vals in
+      Array.sort compare sorted;
+      assert (sorted = Array.init 9 (fun i -> i + 1)
+              || (Printf.eprintf "FAILED: %s\n" name; false)) in
+    for i = 0 to 8 do
+      check_group (Printf.sprintf "row %d" i) sol.(i);
+      check_group (Printf.sprintf "col %d" i) (Array.init 9 (fun j -> sol.(j).(i)))
+    done;
+    for bi = 0 to 2 do
+      for bj = 0 to 2 do
+        check_group (Printf.sprintf "box %d,%d" bi bj)
+          (Array.init 9 (fun k -> sol.(bi*3 + k/3).(bj*3 + k mod 3)))
+      done
+    done;
+    (* Verify fixed cells are preserved *)
+    for i = 0 to 8 do
+      for j = 0 to 8 do
+        if puzzle.(i).(j) > 0 then
+          assert (sol.(i).(j) = puzzle.(i).(j))
+      done
+    done;
+    Printf.printf "Sudoku: PASSED\n"
+  end else begin
+    prerr_endline "No solution"; exit 1
+  end

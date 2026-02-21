@@ -42,10 +42,19 @@ let () =
     Goals.Array.choose_index (fun a1 a2 -> Var.Attr.size a1 < Var.Attr.size a2) in
   let goal = Goals.Array.forall ~select:min_size Goals.indomain letters in
 
-  if Goals.solve goal then
-    Printf.printf "  %d%d%d%d\n+ %d%d%d%d\n------\n %d%d%d%d%d\n"
-      (Fd.int_value s) (Fd.int_value e) (Fd.int_value n) (Fd.int_value d)
-      (Fd.int_value m) (Fd.int_value o) (Fd.int_value r) (Fd.int_value e)
-      (Fd.int_value m) (Fd.int_value o) (Fd.int_value n) (Fd.int_value e) (Fd.int_value y)
-  else
-    prerr_endline "No solution"
+  if Goals.solve goal then begin
+    let vs = Fd.int_value s and ve = Fd.int_value e and vn = Fd.int_value n
+    and vd = Fd.int_value d and vm = Fd.int_value m and vo = Fd.int_value o
+    and vr = Fd.int_value r and vy = Fd.int_value y in
+    let send_v  = 1000*vs + 100*ve + 10*vn + vd in
+    let more_v  = 1000*vm + 100*vo + 10*vr + ve in
+    let money_v = 10000*vm + 1000*vo + 100*vn + 10*ve + vy in
+    Printf.printf "  %d\n+ %d\n------\n %d\n" send_v more_v money_v;
+    (* Verify *)
+    assert (send_v + more_v = money_v);
+    assert (vs = 9 && ve = 5 && vn = 6 && vd = 7);
+    assert (vm = 1 && vo = 0 && vr = 8 && vy = 2);
+    Printf.printf "SEND+MORE=MONEY: PASSED\n"
+  end else begin
+    prerr_endline "No solution"; exit 1
+  end

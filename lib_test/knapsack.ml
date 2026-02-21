@@ -43,7 +43,7 @@ let () =
             best := Array.map Fd.int_value items)));
 
   match !best with
-  | [||] -> prerr_endline "No solution"
+  | [||] -> prerr_endline "No solution"; exit 1
   | sol ->
     Printf.printf "\nOptimal selection:\n";
     let total_w = ref 0 and total_v = ref 0 in
@@ -53,4 +53,9 @@ let () =
         total_w := !total_w + weights.(i);
         total_v := !total_v + values.(i)
       end) sol;
-    Printf.printf "Total: weight=%d/%d, value=%d\n" !total_w capacity !total_v
+    Printf.printf "Total: weight=%d/%d, value=%d\n" !total_w capacity !total_v;
+    (* Verify *)
+    assert (!total_w <= capacity);
+    assert (!total_v = 360);
+    Array.iter (fun x -> assert (x = 0 || x = 1)) sol;
+    Printf.printf "Knapsack: PASSED\n"

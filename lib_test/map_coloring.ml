@@ -30,7 +30,20 @@ let () =
 
   if Goals.solve (Goals.Array.labeling regions) then begin
     Printf.printf "Map coloring solution:\n";
-    Array.iteri (fun i r ->
-      Printf.printf "  %3s = %s\n" names.(i) colors.(Fd.int_value r)) regions
-  end else
-    prerr_endline "No solution"
+    let vals = Array.map Fd.int_value regions in
+    Array.iteri (fun i c ->
+      Printf.printf "  %3s = %s\n" names.(i) colors.(c)) vals;
+    (* Verify: adjacent regions have different colors *)
+    let adjacencies = [| (0,1); (0,2); (1,2); (1,3); (2,3); (2,4); (2,5); (3,4); (4,5) |] in
+    Array.iter (fun (i, j) ->
+      assert (vals.(i) <> vals.(j)
+              || (Printf.eprintf "FAILED: %s = %s\n" names.(i) names.(j); false)))
+      adjacencies;
+    (* Verify: all values in {0,1,2} *)
+    Array.iteri (fun i c ->
+      assert (c >= 0 && c <= 2
+              || (Printf.eprintf "FAILED: %s out of range\n" names.(i); false))) vals;
+    Printf.printf "Map coloring: PASSED\n"
+  end else begin
+    prerr_endline "No solution"; exit 1
+  end
