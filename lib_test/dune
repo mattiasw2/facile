@@ -1,6 +1,7 @@
 (executables
  (names queens send_more_money sudoku map_coloring magic_sequence golomb knapsack
-        knights assignment nurse_schedule interval_test sorting_test)
+        knights assignment nurse_schedule interval_test sorting_test
+        conjunto_test domain_test reify_test search_test custom_cstr_test var_fd_test)
  (libraries facile))
 
 (rule
@@ -61,4 +62,34 @@
 (rule
  (alias runtest)
  (deps sorting_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps conjunto_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps domain_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps reify_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps search_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps custom_cstr_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps var_fd_test.exe)
  (action (run %{deps})))
