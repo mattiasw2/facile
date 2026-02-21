@@ -1,8 +1,38 @@
-(executable
- (name queens)
+(executables
+ (names queens send_more_money sudoku map_coloring magic_sequence golomb knapsack)
  (libraries facile))
 
 (rule
  (alias runtest)
  (deps queens.exe)
  (action (run %{deps} 8)))
+
+(rule
+ (alias runtest)
+ (deps send_more_money.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps sudoku.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps map_coloring.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps magic_sequence.exe)
+ (action (run %{deps} 7)))
+
+(rule
+ (alias runtest)
+ (deps golomb.exe)
+ (action (run %{deps} 7)))
+
+(rule
+ (alias runtest)
+ (deps knapsack.exe)
+ (action (run %{deps})))
