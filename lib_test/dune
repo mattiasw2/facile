@@ -1,5 +1,6 @@
 (executables
- (names queens send_more_money sudoku map_coloring magic_sequence golomb knapsack)
+ (names queens send_more_money sudoku map_coloring magic_sequence golomb knapsack
+        knights assignment nurse_schedule interval_test sorting_test)
  (libraries facile))
 
 (rule
@@ -35,4 +36,29 @@
 (rule
  (alias runtest)
  (deps knapsack.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps knights.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps assignment.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps nurse_schedule.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps interval_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps sorting_test.exe)
  (action (run %{deps})))
