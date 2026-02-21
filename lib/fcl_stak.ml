@@ -39,6 +39,13 @@ let top_level = ref !stack
 let nb_levels = ref 0
 let nb_choice_points = ref 0
 let reset () =
+  (* Undo all trail entries before clearing, so that backtrackable
+     references (e.g. event registrations from LDS) are properly restored. *)
+  let rec undo = function
+    | Level {failure = s; _} -> undo s
+    | Empty -> ()
+    | Trail (f, s) -> f (); undo s in
+  undo !stack;
   stack := Empty;
   top_level := Empty;
   nb_levels := 0
@@ -78,12 +85,7 @@ let backtrack () =
     | Trail (undo, s) -> undo (); bt s in
   bt !stack
 
-let backtrack_all () =
-  let rec bt = function
-      Level {failure=s; level=_; success=_; last_level=_} -> bt s
-    | Empty -> reset ()
-    | Trail (undo, s) -> undo (); bt s in
-  bt !stack
+let backtrack_all () = reset ()
 
 let size () =
   let rec count n = function
