@@ -26,10 +26,11 @@ and efficient language.
 
 ### INSTALLATION:
 
-  All you need is the Objective Caml 4.03 (or greater) compiler and jbuilder.
+  All you need is OCaml 5.x (or greater) and dune.
 
 ```bash
-  opam install facile
+  dune build
+  dune runtest
 ```
 ### DOCUMENTATION
 
