@@ -43,6 +43,9 @@ let () =
     "quasigroup",   "Quasigroup Completion",  Quasigroup_completion.run;
     "subset-sum",   "Subset Sum",             Subset_sum.run;
     "debruijn",     "De Bruijn Sequences",    Debruijn.run;
+    "nqueens",      "N-Queens (scaling)",     Nqueens.run;
+    "golomb",       "Golomb Rulers",          Golomb_ruler.run;
+    "nonogram",     "Nonograms",              Nonogram.run;
   ] in
 
   let active =
