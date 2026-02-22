@@ -1,6 +1,7 @@
 (executables
  (names queens send_more_money sudoku map_coloring magic_sequence golomb knapsack
-        knights assignment nurse_schedule interval_test sorting_test
+        knights assignment nurse_schedule cumulative_scheduling
+        interval_test sorting_test
         conjunto_test domain_test reify_test search_test custom_cstr_test var_fd_test
         combined_test)
  (libraries facile))
@@ -53,6 +54,11 @@
 (rule
  (alias runtest)
  (deps nurse_schedule.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps cumulative_scheduling.exe)
  (action (run %{deps})))
 
 (rule

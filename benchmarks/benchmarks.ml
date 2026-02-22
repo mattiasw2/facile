@@ -46,6 +46,10 @@ let () =
     "nqueens",      "N-Queens (scaling)",     Nqueens.run;
     "golomb",       "Golomb Rulers",          Golomb_ruler.run;
     "nonogram",     "Nonograms",              Nonogram.run;
+    "cumulative",   "Cumulative Scheduling",  Cumulative_scheduling.run;
+    "rack",         "Rack Configuration",     Rack.run;
+    "equations",    "Equation Solving",       Equation_solving.run;
+    "mortgage",     "Mortgage Calculator",    Mortgage.run;
   ] in
 
   let active =
