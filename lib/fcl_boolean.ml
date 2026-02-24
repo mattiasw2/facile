@@ -90,7 +90,7 @@ let demon xs shared_min shared_max =
   Fcl_cstr.create ~name ~fprint ~init update ~nb_wakings:(Array.length xs) delay
 
 let is_boolean x =
-  let min_x, max_x = Fcl_var.Fd.min_max x in min_x = 0 && max_x = 1
+  let min_x, max_x = Fcl_var.Fd.min_max x in min_x >= 0 && max_x <= 1
 let is_boolean_array l =
   try
     Array.iter (fun b -> if not (is_boolean b) then raise Exit) l;

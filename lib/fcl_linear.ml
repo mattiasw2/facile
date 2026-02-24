@@ -438,7 +438,7 @@ let get_boolsum_threshold () = !boolsum_threshold
 let set_boolsum_threshold x = boolsum_threshold := x
 
 let is_boolean x =
-  let min_x, max_x = Fcl_var.Fd.min_max x in min_x = 0 && max_x = 1
+  let min_x, max_x = Fcl_var.Fd.min_max x in min_x >= 0 && max_x <= 1
 
 (* flatten : ('a * 'b) list -> ('a * 'b list) list -> ('a * 'b) list *)
 let rec flatten rest = function
