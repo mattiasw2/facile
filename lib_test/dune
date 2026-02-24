@@ -3,7 +3,7 @@
         knights assignment nurse_schedule cumulative_scheduling
         interval_test sorting_test
         conjunto_test domain_test reify_test search_test custom_cstr_test var_fd_test
-        combined_test)
+        combined_test nonlinear_test fdarray_opti_test)
  (libraries facile))
 
 (rule
@@ -104,4 +104,14 @@
 (rule
  (alias runtest)
  (deps combined_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps nonlinear_test.exe)
+ (action (run %{deps})))
+
+(rule
+ (alias runtest)
+ (deps fdarray_opti_test.exe)
  (action (run %{deps})))
