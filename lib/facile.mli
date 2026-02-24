@@ -151,6 +151,7 @@ module Stak :
       val ref : 'a -> 'a ref
       val set : 'a ref -> 'a -> unit
       val get : 'a ref -> 'a
+      val reset : unit -> unit
     end
 
 module Data :

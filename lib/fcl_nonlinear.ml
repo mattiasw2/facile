@@ -382,8 +382,8 @@ let modulo z x y =
     let (yxya, yxyb) = min_max_mult_inter yc yd xyc xyd in
     let (zc, zd) = Fd.min_max z in
     let xmin, xmax = Linear.min_max_plus_inter yxya yxyb zc zd in
-    let xmin = if zc >= 0 then max 0 xmin else xmin
-    and xmax = if zd <= 0 then min 0 xmax else xmax in
+    let xmin = if zc > 0 then max 0 xmin else xmin
+    and xmax = if zd < 0 then min 0 xmax else xmax in
     (xmin, xmax) in
   let min_max_of_yexp () =
     let (xa, xb) = Fd.min_max x and (zc, zd) = Fd.min_max z in
